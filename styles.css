@@ -1634,3 +1634,449 @@ th.highlight-col {
         font-size: 1.8rem;
     }
 }
+
+/* ==========================================================================
+   2026-06-07 Portfolio Upgrade - Sales Optimization Styles
+   ========================================================================== */
+
+/* 1. Pain Points Section */
+.pain-points-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 40px auto 0;
+    padding: 30px;
+    background-color: var(--surface-color);
+}
+
+.pain-point-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.pain-check-icon {
+    color: var(--accent-green);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.pain-text {
+    color: var(--text-secondary);
+}
+
+/* 2. Creator Profile Section */
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    max-width: 900px;
+    margin: 40px auto 0;
+    padding: 40px;
+    background-color: var(--surface-color);
+}
+
+.profile-avatar-wrapper {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-avatar-icon {
+    font-size: 3rem;
+    color: var(--accent-blue);
+}
+
+.profile-info {
+    flex: 1;
+}
+
+.profile-name {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.profile-role {
+    font-size: 0.95rem;
+    color: var(--accent-blue);
+    margin-top: 4px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.profile-desc {
+    margin-top: 20px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.profile-desc p {
+    margin-bottom: 12px;
+}
+
+.profile-desc p:last-child {
+    margin-bottom: 0;
+}
+
+/* 3. AI Benefits Section */
+.benefit-card {
+    background-color: var(--surface-color);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+}
+
+.benefit-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.benefit-icon-wrapper.blue { background-color: rgba(59, 130, 246, 0.1); color: var(--accent-blue); }
+.benefit-icon-wrapper.purple { background-color: rgba(139, 92, 246, 0.1); color: var(--accent-purple); }
+.benefit-icon-wrapper.green { background-color: rgba(16, 185, 129, 0.1); color: var(--accent-green); }
+.benefit-icon-wrapper.amber { background-color: rgba(245, 158, 11, 0.1); color: var(--accent-amber); }
+
+.benefit-card-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.benefit-card-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 4. Case Study Details Drawers */
+.badge-demo-label {
+    display: inline-block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    background-color: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+}
+
+.btn-case-study {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-case-study:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-blue);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.btn-case-study i {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-case-study[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.case-study-drawer {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    border-top: 0 solid var(--border-color);
+    margin-top: 0;
+}
+
+.case-study-drawer.open {
+    max-height: 800px;
+    opacity: 1;
+    border-top: 1px solid var(--border-color);
+    margin-top: 24px;
+    padding-top: 24px;
+}
+
+.case-study-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+.case-study-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+}
+
+.case-study-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.case-study-sec h4 {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.case-study-sec h4::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 12px;
+    background-color: var(--accent-blue);
+    border-radius: 2px;
+}
+
+.case-study-sec p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* 5. Pricing Section */
+.pricing-grid {
+    margin-top: 40px;
+}
+
+.price-card {
+    background-color: var(--surface-color);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 30px;
+    position: relative;
+    height: 100%;
+}
+
+.price-card.highlighted {
+    border-color: var(--accent-blue);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), 0 0 20px 0 rgba(59, 130, 246, 0.15);
+}
+
+.popular-badge {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--accent-blue);
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    padding: 4px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+}
+
+.price-header {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+}
+
+.price-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.price-value {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-top: 16px;
+    display: flex;
+    align-items: baseline;
+    line-height: 1;
+}
+
+.price-tax {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.price-period {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-weight: 500;
+}
+
+.price-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex: 1;
+}
+
+.price-features li {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+}
+
+.price-features li i {
+    color: var(--accent-blue);
+    font-size: 0.95rem;
+    margin-top: 2px;
+}
+
+.price-card.highlighted .price-features li i {
+    color: var(--accent-blue);
+}
+
+/* 6. Partner Section (制作会社様へ) */
+.partner-card {
+    background-color: var(--surface-color);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.partner-icon {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(59, 130, 246, 0.08);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.partner-icon i {
+    font-size: 1.75rem;
+    color: var(--accent-blue);
+}
+
+.partner-content {
+    flex: 1;
+}
+
+.partner-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.partner-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Formspree Selector Styling */
+select {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 12px 16px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: var(--transition-fast);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 15px 0 var(--accent-blue-glow);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+select option {
+    background-color: var(--surface-color);
+    color: var(--text-primary);
+}
+
+/* Responsive Styles for new sections */
+@media (max-width: 992px) {
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 24px;
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .case-study-body {
+        grid-template-columns: 1fr;
+    }
+    
+    .partner-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}

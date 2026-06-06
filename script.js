@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const revealTargets = document.querySelectorAll(
         ".problem-card, .table-wrapper, .workflow-step, .security-card, " +
         ".dashboard-widget, .tech-box, .feature-item, .portfolio-card, " +
-        ".strength-card, .faq-item, .contact-card"
+        ".strength-card, .faq-item, .contact-card, .pain-points-list, .profile-card, " +
+        ".benefit-card, .price-card, .partner-card"
     );
     
     // Add base reveal class programmatically to keep HTML clean
@@ -127,12 +128,49 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mm < 10) mm = '0' + mm;
         if (dd < 10) dd = '0' + dd;
         
-        // Output format: YYYY-MM-DD (matches the current simulation time)
         lastScanDateEl.textContent = `${yyyy}-${mm}-${dd}`;
     }
 
     // ==========================================================================
-    // 5. Elegant Form Validation & Simulated DevSecOps Pipeline Feedback
+    // 4.5. Case Study Drawer Toggles (Smooth Transition)
+    // ==========================================================================
+    const caseStudyBtns = document.querySelectorAll(".btn-case-study");
+
+    caseStudyBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const targetId = btn.getAttribute("data-target");
+            const drawer = document.getElementById(targetId);
+            if (!drawer) return;
+
+            const isOpen = drawer.classList.contains("open");
+            
+            // Close other drawers if open
+            document.querySelectorAll(".case-study-drawer").forEach(d => {
+                if (d !== drawer && d.classList.contains("open")) {
+                    d.classList.remove("open");
+                    d.style.maxHeight = "0px";
+                    const associatedBtn = document.querySelector(`[data-target="${d.id}"]`);
+                    if (associatedBtn) {
+                        associatedBtn.setAttribute("aria-expanded", "false");
+                    }
+                }
+            });
+
+            if (isOpen) {
+                drawer.classList.remove("open");
+                drawer.style.maxHeight = "0px";
+                btn.setAttribute("aria-expanded", "false");
+            } else {
+                drawer.classList.add("open");
+                const contentHeight = drawer.querySelector(".case-study-content").scrollHeight;
+                drawer.style.maxHeight = `${contentHeight + 48}px`; // padding buffer
+                btn.setAttribute("aria-expanded", "true");
+            }
+        });
+    });
+
+    // ==========================================================================
+    // 5. Formspree Submission & DevSecOps Validation Simulation
     // ==========================================================================
     const contactForm = document.getElementById("contactForm");
     const formFeedback = document.getElementById("formFeedback");
@@ -141,33 +179,79 @@ document.addEventListener("DOMContentLoaded", () => {
         contactForm.addEventListener("submit", (e) => {
             e.preventDefault();
             
-            // Change button to scanning state
             const submitBtn = contactForm.querySelector("button[type='submit']");
             const originalBtnText = submitBtn.textContent;
             
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> セキュア送信準備中...';
             
-            // Simulate automated client form input scan for security injection (XSS/SQLi defense simulation)
+            // 1. Client-side DevSecOps Scan simulation (checking XSS / Script Injections)
             setTimeout(() => {
                 submitBtn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> 送信チェック完了...';
                 
                 setTimeout(() => {
-                    // Reset form and show success message
-                    contactForm.reset();
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = originalBtnText;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane fa-bounce"></i> 送信中...';
                     
-                    formFeedback.className = "form-feedback success";
-                    formFeedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> お問い合わせ内容を安全に送信しました。無料オンライン相談をご希望の場合は、上記カレンダーリンクからも直接日程をご予約いただけます。';
+                    const actionUrl = contactForm.getAttribute("action");
+                    const isPlaceholder = actionUrl.includes("placeholder_id");
                     
-                    // Clear success message after 10 seconds
-                    setTimeout(() => {
-                        formFeedback.innerHTML = "";
-                    }, 10000);
+                    const handleSuccess = () => {
+                        contactForm.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalBtnText;
+                        
+                        formFeedback.className = "form-feedback success";
+                        formFeedback.innerHTML = '<i class="fa-solid fa-circle-check"></i> お問い合わせありがとうございます。ご入力いただいた内容を安全に送信しました。確認後、折り返しご連絡いたします。';
+                        
+                        // Scroll feedback into view
+                        formFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                        setTimeout(() => {
+                            formFeedback.innerHTML = "";
+                            formFeedback.className = "form-feedback";
+                        }, 8000);
+                    };
+
+                    const handleFailure = (msg) => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalBtnText;
+                        
+                        formFeedback.className = "form-feedback error";
+                        formFeedback.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> 送信に失敗しました: ${msg || "サーバーエラーが発生しました。"}`;
+                        
+                        formFeedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    };
+
+                    if (isPlaceholder) {
+                        // Demo mode: simulate success after a delay
+                        setTimeout(() => {
+                            handleSuccess();
+                        }, 1000);
+                    } else {
+                        // Real submit via fetch
+                        fetch(actionUrl, {
+                            method: "POST",
+                            body: new FormData(contactForm),
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                handleSuccess();
+                            } else {
+                                response.json().then(data => {
+                                    handleFailure(data.error || "Formspreeでの送信エラー");
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            handleFailure(error.message);
+                        });
+                    }
                     
-                }, 1500);
-            }, 1500);
+                }, 1000);
+            }, 1200);
         });
     }
 });
