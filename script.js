@@ -97,15 +97,15 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Toggle active state for other open items (accordion behavior)
             document.querySelectorAll(".faq-item").forEach(item => {
-                if (item !== faqItem && item.classList.contains("active")) {
-                    item.classList.remove("active");
+                if (item !== faqItem && item.classList.contains("faq-open")) {
+                    item.classList.remove("faq-open");
                     item.querySelector(".faq-answer").style.maxHeight = "0px";
                 }
             });
             
-            faqItem.classList.toggle("active");
+            faqItem.classList.toggle("faq-open");
             
-            if (faqItem.classList.contains("active")) {
+            if (faqItem.classList.contains("faq-open")) {
                 // Calculate content height and apply to max-height for smooth transition
                 faqAnswer.style.maxHeight = `${faqAnswer.scrollHeight}px`;
             } else {

@@ -1282,7 +1282,7 @@ th.highlight-col {
 }
 
 /* Accordion Active State */
-.faq-item.active .faq-arrow {
+.faq-item.faq-open .faq-arrow {
     transform: rotate(45deg);
     color: #ffffff;
 }
