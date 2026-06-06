@@ -2079,4 +2079,11 @@ select option {
         grid-template-columns: 1fr;
         gap: 24px;
     }
+    
+    .project-name {
+        font-size: 1.5rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
 }
+
