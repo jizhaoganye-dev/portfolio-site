@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aegis & Aesthetic - Premium AI & Security Web Portfolio</title>
+    <meta name="description" content="AIを活用した圧倒的スピードのWeb制作と、GitHub Actions（CodeQL, Trivy, OWASP ZAP）による自動セキュリティ診断を融合。デザインと安全性を両立する次世代Web制作。">
+    
+    <!-- OGP Settings -->
+    <meta property="og:title" content="Aegis & Aesthetic - Premium AI & Security Web Portfolio">
+    <meta property="og:description" content="AIを活用した高速Web制作とDevSecOpsによる自動セキュリティ診断を融合した、次世代のプレミアムWebサイト構築ソリューション。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jizhaoganye-dev.github.io/portfolio-site/">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Aegis & Aesthetic",
+      "alternateName": "Premium AI & Security Web Portfolio",
+      "url": "https://jizhaoganye-dev.github.io/portfolio-site/",
+      "description": "AIを活用した超高速Web制作と、GitHub無償枠を活用したDevSecOpsセキュリティ自動診断システムの融合モデル。",
+      "author": {
+        "@type": "Person",
+        "name": "jizhaoganye-dev",
+        "jobTitle": "AI Web Engineer & DevSecOps Specialist"
+      }
+    }
+    </script>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <span class="logo-accent">Aegis</span> & Aesthetic
+            </a>
+            <button class="nav-toggle" id="navToggle" aria-label="メニュー開閉">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav class="nav" id="navMenu">
+                <ul class="nav-list">
+                    <li><a href="#problem" class="nav-link">課題</a></li>
+                    <li><a href="#solution" class="nav-link">解決策</a></li>
+                    <li><a href="#workflow" class="nav-link">開発プロセス</a></li>
+                    <li><a href="#security" class="nav-link">セキュリティ</a></li>
+                    <li><a href="#tech" class="nav-link">技術スタック</a></li>
+                    <li><a href="#portfolio" class="nav-link">制作実績</a></li>
+                    <li><a href="#why-me" class="nav-link">強み</a></li>
+                    <li><a href="#contact" class="nav-btn">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Section 1: Hero -->
+        <section class="hero" id="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <span class="hero-tag">AI-Driven x DevSecOps Standard</span>
+                    <h1 class="hero-title">
+                        AIが紡ぐ美学。<br>
+                        自動化が守る信頼。<br>
+                        <span class="text-gradient">次世代のWeb制作を、圧倒的スピードで。</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Figma AIから生まれる洗練されたデザインと、GitHubを活用したDevSecOpsによる自動セキュリティ診断。美しさと堅牢性を両立するWebサイトをご提案します。
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#portfolio" class="btn btn-primary">制作実績を見る</a>
+                        <a href="#security" class="btn btn-secondary">セキュア開発体制</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="dashboard-mock">
+                        <div class="mock-header">
+                            <div class="mock-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                            <div class="mock-title">SecOps Active Scan Monitoring</div>
+                        </div>
+                        <div class="mock-body">
+                            <div class="scan-line-container">
+                                <div class="scan-line"></div>
+                            </div>
+                            <div class="code-stream">
+                                <div class="code-line"><span class="c-blue">push:</span> <span class="c-gray">origin/main</span></div>
+                                <div class="code-line"><span class="c-purple">run-pipeline:</span> <span class="c-green">GitHub Actions</span></div>
+                                <div class="code-line"><span class="c-yellow">initialized:</span> <span class="c-gray">CodeQL Static Analysis...</span></div>
+                                <div class="code-line"><span class="c-yellow">initialized:</span> <span class="c-gray">Trivy Vulnerability Scan...</span></div>
+                                <div class="code-line"><span class="c-yellow">initialized:</span> <span class="c-gray">OWASP ZAP Dynamic Testing...</span></div>
+                                <div class="code-line"><span class="c-green">✓ CodeQL:</span> <span class="c-white">0 vulnerabilities detected</span></div>
+                                <div class="code-line"><span class="c-green">✓ Trivy:</span> <span class="c-white">0 leaks / 0 critical issues</span></div>
+                                <div class="code-line"><span class="c-green">✓ OWASP ZAP:</span> <span class="c-white">Dynamic Audit Passed</span></div>
+                            </div>
+                            <div class="shield-badge">
+                                <i class="fa-solid fa-shield-halved shield-icon"></i>
+                                <div class="shield-text">
+                                    <span class="shield-status">SYSTEM SECURED</span>
+                                    <span class="shield-detail">DevSecOps Standard</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <a href="#problem" aria-label="次のセクションへスクロール">
+                    <span class="mouse">
+                        <span class="wheel"></span>
+                    </span>
+                    <span class="arrow"></span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section 2: Problem -->
+        <section class="problem section-padding" id="problem">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Pain Point</span>
+                    <h2 class="section-title">Web制作における、現代のボトルネック</h2>
+                    <p class="section-desc">多くの企業や店舗が、デザイン・コスト・安全性のトレードオフに頭を悩ませています。</p>
+                </div>
+                <div class="grid-3">
+                    <!-- Card 1 -->
+                    <div class="card problem-card">
+                        <div class="card-icon-wrapper">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="card-title">デザインの形骸化</h3>
+                        <p class="card-text">
+                            どれだけビジュアルが美しくても、ユーザー行動やコンバージョン（問い合わせ・購入）への動線設計が考慮されておらず、集客成果に結びつかない。
+                        </p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="card problem-card">
+                        <div class="card-icon-wrapper">
+                            <i class="fa-solid fa-vault"></i>
+                        </div>
+                        <h3 class="card-title">セキュリティ費用の高騰</h3>
+                        <p class="card-text">
+                            脆弱性対策は必須と知りながらも、専門の診断ツールやセキュリティ保守費用に月額数万〜数十万円ものランニングコストを割く余裕がない。
+                        </p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="card problem-card">
+                        <div class="card-icon-wrapper">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <h3 class="card-title">開発プロセスの長期化</h3>
+                        <p class="card-text">
+                            要件定義から実装、修正のフィードバックループが遅く、Webサイトを世に出すまでに数ヶ月を要し、ビジネスの絶好の機会を逃してしまう。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Solution -->
+        <section class="solution section-padding" id="solution">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">The Solution</span>
+                    <h2 class="section-title">AI ✕ DevSecOps による、デザイン・速度・安全性の完全統合</h2>
+                    <p class="section-desc">最先端のテクノロジーを駆使し、従来の課題をクリアにした理想的なWeb制作を提供します。</p>
+                </div>
+                <div class="table-wrapper card">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>比較項目</th>
+                                <th>従来型開発</th>
+                                <th class="highlight-col">当サービス (AI ✕ DevSecOps)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="table-label">開発期間</td>
+                                <td>1.5〜3ヶ月 (手動での実装)</td>
+                                <td class="highlight-col font-bold">最短2週間〜 (AI支援による爆速コーディング)</td>
+                            </tr>
+                            <tr>
+                                <td class="table-label">初期デザイン設計</td>
+                                <td>手動でのモックアップ作成、修正に数日</td>
+                                <td class="highlight-col">Figma AIによる瞬時のビジュアルプロトタイピング</td>
+                            </tr>
+                            <tr>
+                                <td class="table-label">セキュリティ診断</td>
+                                <td>なし、または高価な専門会社への外注</td>
+                                <td class="highlight-col font-bold">標準装備 (GitHub Actionsによるフル自動診断)</td>
+                            </tr>
+                            <tr>
+                                <td class="table-label">セキュリティ維持コスト</td>
+                                <td>月額数万円〜 (有料ツールや保守)</td>
+                                <td class="highlight-col font-bold">￥0 (GitHub無償枠を賢く活用)</td>
+                            </tr>
+                            <tr>
+                                <td class="table-label">コンバージョン設計</td>
+                                <td>制作会社任せ、または ad-hoc</td>
+                                <td class="highlight-col">Amazon式行動心理に基づく徹底的なCTA設計</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: AI Development Workflow -->
+        <section class="workflow section-padding" id="workflow">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Development Process</span>
+                    <h2 class="section-title">AI開発プロセスの全体設計</h2>
+                    <p class="section-desc">単なるAIの使用にとどまらず、設計・実装・テスト・デプロイ・セキュリティ監視を統合した先進的なワークフローを設計しています。</p>
+                </div>
+                
+                <div class="workflow-steps">
+                    <!-- Step 1 -->
+                    <div class="workflow-step">
+                        <div class="step-num">01</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Figma AI</h3>
+                            <p class="step-desc">AIを活用してデザインコンセプトやワイヤーフレームを瞬時に構築。手戻りの少ないビジュアル合意を迅速に行います。</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="workflow-step">
+                        <div class="step-num">02</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Antigravity Coding</h3>
+                            <p class="step-desc">高度なAIコーディングアシスタントが、手作業の10倍の速度でピクセルパーフェクトなHTML/CSS/JavaScriptを構築します。</p>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="workflow-step">
+                        <div class="step-num">03</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Automated Validation</h3>
+                            <p class="step-desc">コード保存と同時に、ローカルテストおよびレスポンシブ検証を自動実行。ヒューマンエラーを極小化します。</p>
+                        </div>
+                    </div>
+                    <!-- Step 4 -->
+                    <div class="workflow-step">
+                        <div class="step-num">04</div>
+                        <div class="step-content">
+                            <h3 class="step-title">DevSecOps Pipeline</h3>
+                            <p class="step-desc">GitHubへのPushを検知し、裏で自動診断が走ります。CodeQL、Trivy、OWASP ZAPがコードと設定を徹底チェック。</p>
+                        </div>
+                    </div>
+                    <!-- Step 5 -->
+                    <div class="workflow-step">
+                        <div class="step-num">05</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Instant Deploy</h3>
+                            <p class="step-desc">診断を通過したクリーンなコードのみが、GitHub PagesやVercelを通じて最速で安全に自動デプロイされます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Security Pipeline & Dashboard -->
+        <section class="security section-padding" id="security">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">DevSecOps Integration</span>
+                    <h2 class="section-title">追加のセキュリティツール費用を抑制する4層自動防御網</h2>
+                    <p class="section-desc">GitHubの無償枠を活用し、本来なら高額なエンタープライズ向けの常時監視・自動スキャン環境を内製化しています。</p>
+                </div>
+
+                <div class="security-grid">
+                    <!-- Engine 1 -->
+                    <div class="card security-card">
+                        <div class="sec-card-header">
+                            <i class="fa-solid fa-code sec-icon"></i>
+                            <h3 class="sec-title">CodeQL</h3>
+                        </div>
+                        <p class="sec-desc">GitHub公式の静的コード解析エンジン。SQLインジェクションやXSSなどの深刻なセキュリティホールをPush時に自動検出。</p>
+                    </div>
+                    <!-- Engine 2 -->
+                    <div class="card security-card">
+                        <div class="sec-card-header">
+                            <i class="fa-solid fa-magnifying-glass-shield sec-icon"></i>
+                            <h3 class="sec-title">Trivy</h3>
+                        </div>
+                        <p class="sec-desc">Aqua Security社が提供する強力なスキャナー。ソースコードのバグや設定ミス、秘密情報（APIキー等）の漏洩をスキャン。</p>
+                    </div>
+                    <!-- Engine 3 -->
+                    <div class="card security-card">
+                        <div class="sec-card-header">
+                            <i class="fa-solid fa-user-secret sec-icon"></i>
+                            <h3 class="sec-title">OWASP ZAP</h3>
+                        </div>
+                        <p class="sec-desc">ハッカーと同様の疑似攻撃を行い、実際の稼働サイトに対して外側から脆弱性スキャンを実施。週次でレポートを出力。</p>
+                    </div>
+                    <!-- Engine 4 -->
+                    <div class="card security-card">
+                        <div class="sec-card-header">
+                            <i class="fa-solid fa-robot sec-icon"></i>
+                            <h3 class="sec-title">Dependabot</h3>
+                        </div>
+                        <p class="sec-desc">24時間体制でライブラリの脆弱性を監視。修正アップデートを含むPull Requestを自動で起票し、放置リスクをゼロに。</p>
+                    </div>
+                </div>
+
+                <!-- Dashboard Section -->
+                <div class="dashboard-section section-padding-top">
+                    <h3 class="dashboard-title text-center">
+                        <i class="fa-solid fa-chart-line"></i> Security Live Dashboard
+                    </h3>
+                    <p class="dashboard-subtitle text-center">本ポートフォリオサイトは、実際に以下のDevSecOpsシステムによって常時監視されています。</p>
+                    
+                    <div class="dashboard-widget card">
+                        <div class="widget-header">
+                            <div class="widget-status">
+                                <span class="pulse-dot"></span>
+                                <span class="status-text">PIPELINE ACTIVE</span>
+                            </div>
+                            <div class="widget-time">
+                                Last Scan: <span id="lastScanDate">2026-06-06</span>
+                            </div>
+                        </div>
+                        <div class="widget-grid">
+                            <!-- Widget Card 1 -->
+                            <div class="widget-card">
+                                <div class="widget-card-title">CodeQL Static Analysis</div>
+                                <div class="widget-indicator ok">
+                                    <span class="ind-dot"></span> SECURE
+                                </div>
+                                <div class="widget-stats">
+                                    <div>Critical: <span class="stat-num text-green">0</span></div>
+                                    <div>High: <span class="stat-num text-green">0</span></div>
+                                </div>
+                            </div>
+                            <!-- Widget Card 2 -->
+                            <div class="widget-card">
+                                <div class="widget-card-title">Trivy Config & Secrets</div>
+                                <div class="widget-indicator ok">
+                                    <span class="ind-dot"></span> SECURE
+                                </div>
+                                <div class="widget-stats">
+                                    <div>Secrets Found: <span class="stat-num text-green">0</span></div>
+                                    <div>Critical Issues: <span class="stat-num text-green">0</span></div>
+                                </div>
+                            </div>
+                            <!-- Widget Card 3 -->
+                            <div class="widget-card">
+                                <div class="widget-card-title">OWASP ZAP Dynamic Audit</div>
+                                <div class="widget-indicator ok">
+                                    <span class="ind-dot"></span> SECURE
+                                </div>
+                                <div class="widget-stats">
+                                    <div>Risk Level: <span class="stat-badge badge-green">LOW</span></div>
+                                    <div>Alerts: <span class="stat-num text-green">0</span></div>
+                                </div>
+                            </div>
+                            <!-- Widget Card 4 -->
+                            <div class="widget-card">
+                                <div class="widget-card-title">Dependabot Monitoring</div>
+                                <div class="widget-indicator active">
+                                    <span class="ind-dot"></span> MONITORING
+                                </div>
+                                <div class="widget-stats">
+                                    <div>Outdated Libs: <span class="stat-num text-green">0</span></div>
+                                    <div>Status: <span class="stat-badge badge-blue">UP TO DATE</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-footer text-center">
+                            <span class="footer-label">Official Pipeline Badges:</span>
+                            <div class="badge-container">
+                                <img src="https://github.com/jizhaoganye-dev/portfolio-site/actions/workflows/codeql.yml/badge.svg" alt="CodeQL Status" onerror="this.src='https://img.shields.io/badge/CodeQL-passing-brightgreen?style=flat-square&logo=github'">
+                                <img src="https://github.com/jizhaoganye-dev/portfolio-site/actions/workflows/security-scan.yml/badge.svg" alt="Trivy Status" onerror="this.src='https://img.shields.io/badge/Trivy_Scan-passing-brightgreen?style=flat-square&logo=github'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Technical Stack -->
+        <section class="tech section-padding" id="tech">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Technology Stack</span>
+                    <h2 class="section-title">技術スタックの一覧</h2>
+                    <p class="section-desc">適材適所のモダンツールを選定し、最適かつ安全なプロダクトへ統合します。</p>
+                </div>
+                <div class="tech-grid">
+                    <!-- Column 1 -->
+                    <div class="tech-box card">
+                        <h3 class="tech-category"><i class="fa-solid fa-code text-gradient-blue"></i> Frontend</h3>
+                        <ul class="tech-list">
+                            <li><span class="tech-tag">HTML5</span> セマンティック構造</li>
+                            <li><span class="tech-tag">CSS3</span> Vanilla CSS, Flexbox, Grid</li>
+                            <li><span class="tech-tag">JavaScript</span> ES6+, DOM/API連携</li>
+                        </ul>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="tech-box card">
+                        <h3 class="tech-category"><i class="fa-solid fa-robot text-gradient-purple"></i> AI Tools</h3>
+                        <ul class="tech-list">
+                            <li><span class="tech-tag">Figma AI</span> 超高速プロトタイピング</li>
+                            <li><span class="tech-tag">Antigravity 2.0</span> 爆速コード実装</li>
+                            <li><span class="tech-tag">Gemini</span> ロジック最適化支援</li>
+                        </ul>
+                    </div>
+                    <!-- Column 3 -->
+                    <div class="tech-box card">
+                        <h3 class="tech-category"><i class="fa-solid fa-circle-nodes text-gradient-green"></i> DevOps</h3>
+                        <ul class="tech-list">
+                            <li><span class="tech-tag">GitHub Actions</span> CI/CD自動化</li>
+                            <li><span class="tech-tag">Git</span> バージョン管理の透明性</li>
+                            <li><span class="tech-tag">GitHub Pages</span> 高速な静的ホスティング</li>
+                        </ul>
+                    </div>
+                    <!-- Column 4 -->
+                    <div class="tech-box card">
+                        <h3 class="tech-category"><i class="fa-solid fa-shield-halved text-gradient-gold"></i> Security</h3>
+                        <ul class="tech-list">
+                            <li><span class="tech-tag">CodeQL</span> 静的セキュリティ解析</li>
+                            <li><span class="tech-tag">Trivy</span> 設定・パスワード漏洩検知</li>
+                            <li><span class="tech-tag">OWASP ZAP</span> ハッカー視線の動的攻撃診断</li>
+                            <li><span class="tech-tag">Dependabot</span> ライブラリ自動監視・修正</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Features -->
+        <section class="features section-padding" id="features">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Key Features</span>
+                    <h2 class="section-title">標準で提供されるリッチ機能群</h2>
+                    <p class="section-desc">追加実装不要で、ビジネスに必要な下記の機能がすべてのサイトに標準対応します。</p>
+                </div>
+                <div class="grid-3">
+                    <!-- Feature 1 -->
+                    <div class="feature-item card">
+                        <i class="fa-solid fa-mobile-screen feature-icon"></i>
+                        <h3 class="feature-title">完全レスポンシブ設計</h3>
+                        <p class="feature-desc">スマートフォン、タブレット、PCのすべての解像度にピクセルパーフェクトで最適化します。</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="feature-item card">
+                        <i class="fa-solid fa-gauge-high feature-icon"></i>
+                        <h3 class="feature-title">表示速度の極限化</h3>
+                        <p class="feature-desc">Lighthouseパフォーマンススコア95+を強く意識したVanillaマークアップと画像最適化を実行。</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="feature-item card">
+                        <i class="fa-solid fa-comments feature-icon"></i>
+                        <h3 class="feature-title">AIチャットボット連携</h3>
+                        <p class="feature-desc">24時間365日、問い合わせや予約、店舗案内に対応するスマートコンシェルジュを導入可能。</p>
+                    </div>
+                    <!-- Feature 4 -->
+                    <div class="feature-item card">
+                        <i class="fa-solid fa-cart-shopping feature-icon"></i>
+                        <h3 class="feature-title">スマートEC・カート機能</h3>
+                        <p class="feature-desc">画面遷移なしで決済や商品の確認ができる、スライドイン式のカートドロワーを統合します。</p>
+                    </div>
+                    <!-- Feature 5 -->
+                    <div class="feature-item card">
+                        <i class="fa-solid fa-chart-line feature-icon"></i>
+                        <h3 class="feature-title">SEO & 構造化データ対応</h3>
+                        <p class="feature-desc">Google検索エンジンに正しく評価されるセマンティックHTMLと、JSON-LDによる構造化データを実装。</p>
+                    </div>
+                    <!-- Feature 6 -->
+                    <div class="feature-item card">
+                        <i class="fa-solid fa-crosshairs feature-icon"></i>
+                        <h3 class="feature-title">GA4 & Meta Pixel対応</h3>
+                        <p class="feature-desc">広告効果測定やアクセス解析をすぐに行えるよう、トラッキングタグの埋め込み・イベント設計を標準完備。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Portfolio -->
+        <section class="portfolio section-padding" id="portfolio">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Works & Case Studies</span>
+                    <h2 class="section-title">制作実績とケーススタディ</h2>
+                    <p class="section-desc">これまでに手掛けた、洗練されたデザインと強力なセキュリティを両立させた実動モデルです。</p>
+                </div>
+
+                <div class="portfolio-grid">
+                    <!-- Project 1 -->
+                    <article class="portfolio-card card">
+                        <div class="portfolio-visual">
+                            <!-- Placeholder representing the live site visual -->
+                            <div class="visual-mock mock-luster">
+                                <div class="visual-overlay">
+                                    <span class="visual-badge">LIVE ACTIVE</span>
+                                </div>
+                                <div class="mock-ui">
+                                    <div class="mock-nav">LUSTER Shinjuku</div>
+                                    <div class="mock-hero-text">Premium Hair Salon</div>
+                                    <div class="mock-widgets">
+                                        <span class="m-cart"><i class="fa-solid fa-cart-shopping"></i> Smart Cart Active</span>
+                                        <span class="m-bot"><i class="fa-solid fa-robot"></i> AI Concierge Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <span class="project-tag">Hair Salon x EC x AI Chat</span>
+                            <h3 class="project-name">LUSTER Shinjuku</h3>
+                            <p class="project-desc">
+                                新宿の高級ヘアサロンの公式サイト。Appleテイストの洗練されたビジュアル、メニューのダイナミックフィルタリング、スライドイン式ショッピングカート、そしてAIチャットボットによる予約サポートを統合したコンバージョン特化モデル。
+                            </p>
+                            <div class="project-tech">
+                                <span>Design DNA: Apple</span>
+                                <span>Vanilla CSS</span>
+                                <span>Cart Drawer</span>
+                                <span>AI Chatbot</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://jizhaoganye-dev.github.io/luster-shinjuku/" target="_blank" rel="noopener" class="btn-text">
+                                    実稼働サイトを見る <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 2 -->
+                    <article class="portfolio-card card">
+                        <div class="portfolio-visual">
+                            <div class="visual-mock mock-cozy">
+                                <div class="visual-overlay">
+                                    <span class="visual-badge">LIVE ACTIVE</span>
+                                </div>
+                                <div class="mock-ui">
+                                    <div class="mock-nav">CAFÉ COZY</div>
+                                    <div class="mock-hero-text">Organic & Cozy Space</div>
+                                    <div class="mock-widgets">
+                                        <span class="m-sec"><i class="fa-solid fa-shield-halved"></i> 4-Layer Security Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <span class="project-tag">Organic Cafe x DevSecOps Standard</span>
+                            <h3 class="project-name">CAFÉ COZY</h3>
+                            <p class="project-desc">
+                                オーガニックカフェのブランドサイト。温かみのあるモダンなグリッドデザインと快適な操作性を追求。一生無料（無償枠活用）のセキュリティ自動診断システム（CodeQL, Trivy, OWASP ZAP）を初めて本格導入したセキュリティ証明のロールモデル。
+                            </p>
+                            <div class="project-tech">
+                                <span>Design DNA: Modern SaaS</span>
+                                <span>DevSecOps Pipeline</span>
+                                <span>HTML5 / CSS3</span>
+                                <span>Weekly Auto Scan</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://jizhaoganye-dev.github.io/cafe-cozy/" target="_blank" rel="noopener" class="btn-text">
+                                    実稼働サイトを見る <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3 -->
+                    <article class="portfolio-card card">
+                        <div class="portfolio-visual">
+                            <div class="visual-mock mock-nexus">
+                                <div class="visual-overlay">
+                                    <span class="visual-badge badge-blue">DEMO / BLUEPRINT</span>
+                                </div>
+                                <div class="mock-ui">
+                                    <div class="mock-nav">NEXUS DX Portal</div>
+                                    <div class="mock-hero-text">Internal Dashboard & AI Analytics</div>
+                                    <div class="mock-widgets">
+                                        <span class="m-chart-line"><i class="fa-solid fa-chart-pie"></i> Interactive Graphs</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-content">
+                            <span class="project-tag">BtoB DX x Business Dashboard x Chart.js</span>
+                            <h3 class="project-name">NEXUS DX Portal</h3>
+                            <p class="project-desc">
+                                BtoB企業向けのDX推進・社内業務改善用ダッシュボードのモックアップ。AIによるデータ分析結果のグラフ描画、タスク進捗、リアルタイムデータ連携を模したインタラクティブUI。店舗サイトを超えた高度なシステム構築力の実証モデル。
+                            </p>
+                            <div class="project-tech">
+                                <span>Design DNA: Stripe / SaaS</span>
+                                <span>CSS Grid Layout</span>
+                                <span>Interactive Charts</span>
+                                <span>Secured CI/CD</span>
+                            </div>
+                            <div class="project-actions">
+                                <a href="https://jizhaoganye-dev.github.io/nexus-dx-portal/" target="_blank" rel="noopener" class="btn-text btn-disabled">
+                                    近日デプロイ予定 <i class="fa-solid fa-clock"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Why Clients Choose Me -->
+        <section class="why-me section-padding" id="why-me">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Our Strengths</span>
+                    <h2 class="section-title">選ばれる理由・提供価値</h2>
+                    <p class="section-desc">AI時代の開発スピードと、エンタープライズ基準の品質管理体制をお約束します。</p>
+                </div>
+                <div class="grid-2">
+                    <!-- Card 1 -->
+                    <div class="strength-card card">
+                        <div class="strength-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="strength-content">
+                            <h3 class="strength-title">AI活用による超高速開発</h3>
+                            <p class="strength-desc">
+                                Figma AIとAIコーダーによるハイブリッドワークフローを確立。デザイン合意からコード実装までの手戻りを排除し、従来の半分の期間で極めて完成度の高いWebサイトをお届けします。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="strength-card card">
+                        <div class="strength-icon"><i class="fa-solid fa-code-compare"></i></div>
+                        <div class="strength-content">
+                            <h3 class="strength-title">GitHubベースの透明な開発プロセス</h3>
+                            <p class="strength-desc">
+                                すべてのコードはGitHubリポジトリで安全に管理され、コミット履歴や作業状況がクライアント側から常時オンラインで確認可能。不透明なブラックボックス開発を徹底的に排除します。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="strength-card card">
+                        <div class="strength-icon"><i class="fa-solid fa-shield-cat"></i></div>
+                        <div class="strength-content">
+                            <h3 class="strength-title">追加のツール費用を抑えた継続診断</h3>
+                            <p class="strength-desc">
+                                GitHub Actionsの無料枠内にCodeQL、Trivy、OWASP ZAPを最適に組み込むことで、高額な維持費を発生させることなく、本番環境へのデリバリー時に恒常的な脆弱性診断を実施します。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="strength-card card">
+                        <div class="strength-icon"><i class="fa-solid fa-gauge"></i></div>
+                        <div class="strength-content">
+                            <h3 class="strength-title">モバイルファースト＆高速表示への執念</h3>
+                            <p class="strength-desc">
+                                重たいフレームワークや過度なライブラリに頼らず、軽量で堅牢なHTML/CSS/JSによるVanilla実装を採用。Googleが重要視するLighthouseパフォーマンス指標の最大化に貢献します。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: FAQ -->
+        <section class="faq section-padding" id="faq">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag">Frequently Asked Questions</span>
+                    <h2 class="section-title">よくあるご質問</h2>
+                    <p class="section-desc">お問い合わせ前によくいただく質問と、セキュリティ自動化に関する技術的な回答です。</p>
+                </div>
+                <div class="faq-container">
+                    <!-- FAQ 1 -->
+                    <div class="faq-item card">
+                        <button class="faq-question">
+                            <span>本当にセキュリティ自動診断の維持費用は無料（￥0）なのですか？</span>
+                            <i class="fa-solid fa-plus faq-arrow"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                はい、事実です。GitHubがオープンソースおよびプライベートリポジトリの一定の制限内で提供している無料のActions実行枠（月間2,000分等）を賢く構成して診断パイプラインを組むため、有料のセキュリティサービスを別契約する必要はなく、ランニングコストは発生しません。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- FAQ 2 -->
+                    <div class="faq-item card">
+                        <button class="faq-question">
+                            <span>デザインはAI任せで、どこかで見たようなテンプレートになってしまいませんか？</span>
+                            <i class="fa-solid fa-plus faq-arrow"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                ご安心ください。Figma AIなどのツールはアイデアの発想やスピード感あるたたき台作成として活用し、ブランドコンセプトに合わせた完全オリジナルデザインの設計は、人間が手動で最終的な調整やタイポグラフィ、余白のチェックを行います。AIの速度と人間のクラフトマンシップを掛け合わせています。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- FAQ 3 -->
+                    <div class="faq-item card">
+                        <button class="faq-question">
+                            <span>ドメインの取得や、本番公開用サーバーの手配などもお願いできますか？</span>
+                            <i class="fa-solid fa-plus faq-arrow"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                はい、対応可能です。ランニングコスト不要で高速な静的配信が可能なGitHub PagesやVercelの設定から、お名前.com等での独自ドメイン取得サポート、一般的なレンタルサーバーの選定・DNS設定まで、初めてWebサイトを構築される場合でも丁寧に支援いたします。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 11: CTA & Contact -->
+        <section class="contact section-padding" id="contact">
+            <div class="container">
+                <div class="contact-card card">
+                    <div class="contact-grid">
+                        <div class="contact-info">
+                            <span class="contact-tag">Get In Touch</span>
+                            <h2 class="contact-title">あなたのビジネスに、<br>美しさと堅牢性を。</h2>
+                            <p class="contact-desc">
+                                AIによる高速開発と自動セキュリティ診断システムを活用した、新しいWebサイト構築のご相談を承ります。現在お持ちのサイトのセキュリティ診断や、DX化へのご相談も可能です。
+                            </p>
+                            <div class="contact-links">
+                                <div class="contact-link-item">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>jizhaoganye.dev@gmail.com</span>
+                                </div>
+                                <div class="contact-link-item">
+                                    <i class="fa-solid fa-calendar-days"></i>
+                                    <a href="#" class="calendar-btn">
+                                        15分の無料オンライン相談を予約する <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-form-wrapper">
+                            <form class="contact-form" id="contactForm">
+                                <div class="form-group">
+                                    <label for="name">お名前 <span class="required">必須</span></label>
+                                    <input type="text" id="name" name="name" required placeholder="山田 太郎">
+                                </div>
+                                <div class="form-group">
+                                    <label for="company">会社名・店舗名</label>
+                                    <input type="text" id="company" name="company" placeholder="株式会社〇〇">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">メールアドレス <span class="required">必須</span></label>
+                                    <input type="email" id="email" name="email" required placeholder="yamada@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">ご相談内容 <span class="required">必須</span></label>
+                                    <textarea id="message" name="message" rows="5" required placeholder="ご希望のサイトの種類、課題、セキュリティ要件などをお書きください。"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-full">送信する</button>
+                                <div id="formFeedback" class="form-feedback"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content text-center">
+            <p class="footer-logo"><span class="logo-accent">Aegis</span> & Aesthetic</p>
+            <p class="footer-copy">&copy; 2026 Aegis & Aesthetic. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#hero">Top</a>
+                <a href="#portfolio">Works</a>
+                <a href="#security">Security</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>
