@@ -343,43 +343,52 @@ document.addEventListener("DOMContentLoaded", () => {
             subtitlesContent.textContent = subtitles[index];
         }
 
-        function updateUI() {
+        function updateProgressBar() {
             // Update Progress Bar
-            const ratio = progress / totalDuration;
+            const ratio = Math.max(0, Math.min(1, progress / totalDuration));
             progressBar.style.width = `${ratio * 100}%`;
 
             // Update Time Display
             currentTimeEl.textContent = formatTime(progress);
+        }
 
-            // Determine active scene based on progress
-            let currentScene = 0;
+        function seekTo(targetTime) {
+            const wasPlaying = isPlaying;
+            pause();
+            
+            progress = Math.max(0, Math.min(totalDuration, targetTime));
+            
+            // Determine active scene based on targetTime
+            let targetScene = 0;
             for (let i = 0; i < cumulativeTimes.length - 1; i++) {
                 if (progress >= cumulativeTimes[i] && progress < cumulativeTimes[i + 1]) {
-                    currentScene = i;
+                    targetScene = i;
                     break;
                 }
             }
             if (progress >= totalDuration) {
-                currentScene = scenes.length - 1;
+                targetScene = scenes.length - 1;
             }
 
-            if (currentScene !== activeSceneIndex) {
-                // Pause former audio
-                const prevAudio = audioTracks[activeSceneIndex];
-                if (prevAudio && isPlaying) {
-                    prevAudio.pause();
-                    prevAudio.currentTime = 0;
-                }
-                
-                updateScene(currentScene);
-                
-                // Play new audio
-                const nextAudio = audioTracks[currentScene];
-                if (nextAudio && isPlaying) {
-                    nextAudio.currentTime = 0;
-                    nextAudio.volume = isMuted ? 0 : 1.0;
-                    nextAudio.play().catch(e => console.log("Audio auto-play blocked/failed:", e));
-                }
+            // Pause and reset all audios
+            audioTracks.forEach(a => {
+                a.pause();
+                a.currentTime = 0;
+            });
+            
+            updateScene(targetScene);
+            
+            // Set offset for the active audio
+            const offset = progress - cumulativeTimes[targetScene];
+            const activeAudio = audioTracks[targetScene];
+            if (activeAudio) {
+                activeAudio.currentTime = Math.max(0, Math.min(activeAudio.duration || 0, offset));
+            }
+            
+            updateProgressBar();
+            
+            if (wasPlaying) {
+                play();
             }
         }
 
@@ -389,22 +398,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (isPlaying && activeSceneIndex === index) {
                     if (index < 5) {
                         const nextSceneIndex = index + 1;
-                        progress = cumulativeTimes[nextSceneIndex];
+                        
+                        // Stop current audio track
+                        audio.pause();
+                        audio.currentTime = 0;
+
+                        // Transition to next scene
                         updateScene(nextSceneIndex);
                         
+                        // Play next audio
                         const nextAudio = audioTracks[nextSceneIndex];
                         if (nextAudio) {
                             nextAudio.currentTime = 0;
                             nextAudio.volume = isMuted ? 0 : 1.0;
-                            nextAudio.play().catch(e => console.log("Audio play failed/blocked:", e));
+                            nextAudio.play().catch(e => console.log("Audio play failed:", e));
                         }
+                        
+                        // Sync progress
+                        progress = cumulativeTimes[nextSceneIndex];
+                        updateProgressBar();
                     } else {
                         // Complete end of video
                         progress = totalDuration;
                         pause();
                         progress = 0;
-                        updateUI();
-                        // Reset all audio tracks to beginning
+                        updateScene(0);
+                        updateProgressBar();
                         audioTracks.forEach(a => a.currentTime = 0);
                     }
                 }
@@ -427,7 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (currentAudio) {
                     progress = cumulativeTimes[activeSceneIndex] + currentAudio.currentTime;
                 }
-                updateUI();
+                updateProgressBar();
             }, 50); // High frequency check for smooth animation syncing
         }
 
@@ -456,41 +475,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Previous Scene Event
         prevBtn.addEventListener("click", () => {
-            const wasPlaying = isPlaying;
-            pause();
-            
-            let targetScene = activeSceneIndex;
             const currentAudio = audioTracks[activeSceneIndex];
             const currentAudioTime = currentAudio ? currentAudio.currentTime : 0;
             
             if (currentAudioTime < 1.5 && activeSceneIndex > 0) {
-                targetScene = activeSceneIndex - 1;
+                seekTo(cumulativeTimes[activeSceneIndex - 1]);
+            } else {
+                seekTo(cumulativeTimes[activeSceneIndex]);
             }
-            
-            activeSceneIndex = targetScene;
-            progress = cumulativeTimes[activeSceneIndex];
-            
-            audioTracks.forEach(a => a.currentTime = 0);
-            
-            updateUI();
-            if (wasPlaying) play();
         });
 
         // Next Scene Event
         nextBtn.addEventListener("click", () => {
-            const wasPlaying = isPlaying;
-            pause();
-            
             if (activeSceneIndex < scenes.length - 1) {
-                activeSceneIndex++;
-                progress = cumulativeTimes[activeSceneIndex];
-                audioTracks.forEach(a => a.currentTime = 0);
+                seekTo(cumulativeTimes[activeSceneIndex + 1]);
             } else {
-                progress = totalDuration;
+                seekTo(totalDuration);
             }
-            
-            updateUI();
-            if (wasPlaying) play();
         });
 
         // Volume Button (Mute Toggle)
@@ -526,36 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const rect = progressContainer.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
             const ratio = Math.max(0, Math.min(1, clickX / rect.width));
-            
-            const wasPlaying = isPlaying;
-            pause();
-            
-            progress = ratio * totalDuration;
-            
-            let targetScene = 0;
-            for (let i = 0; i < cumulativeTimes.length - 1; i++) {
-                if (progress >= cumulativeTimes[i] && progress < cumulativeTimes[i + 1]) {
-                    targetScene = i;
-                    break;
-                }
-            }
-            
-            activeSceneIndex = targetScene;
-            const offset = progress - cumulativeTimes[activeSceneIndex];
-            
-            const activeAudio = audioTracks[activeSceneIndex];
-            if (activeAudio) {
-                activeAudio.currentTime = Math.max(0, Math.min(activeAudio.duration || 0, offset));
-            }
-            
-            audioTracks.forEach((a, idx) => {
-                if (idx !== activeSceneIndex) {
-                    a.currentTime = 0;
-                }
-            });
-            
-            updateUI();
-            if (wasPlaying) play();
+            seekTo(ratio * totalDuration);
         });
     }
 });
