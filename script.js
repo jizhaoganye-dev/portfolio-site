@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 6. Interactive Tour Player (Aegis & Aesthetic in 60 Seconds with TTS Audio)
+    // 6. Interactive Tour Player (Aegis & Aesthetic with Premium Neural Audio)
     // ==========================================================================
     const playerContainer = document.querySelector(".tour-player-container");
     const playBtn = document.getElementById("playerPlayBtn");
@@ -276,9 +276,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const scenes = document.querySelectorAll(".tour-scene");
 
     if (playerContainer && playBtn) {
-        const sceneDurations = [5, 7, 8, 8, 8, 6]; // Durations in seconds
-        const totalDuration = sceneDurations.reduce((a, b) => a + b, 0); // 42 seconds
-        const cumulativeTimes = [0, 5, 12, 20, 28, 36, 42];
         const subtitles = [
             "デザインの美しさと、強固な安全性を両立する。次世代Web制作イージス・アンド・エステティック。",
             "多くのWeb制作で放置されがちな脆弱性リスク。しかし、従来の検査手法では莫大なコストと時間がかかります。",
@@ -288,55 +285,47 @@ document.addEventListener("DOMContentLoaded", () => {
             "現在、実績公開にご協力いただける先着2社様限定の特別モニター枠を募集中です。安全で高速なWebサイトを、特別価格で構築しましょう。"
         ];
 
+        // 6 scenes, loading pre-rendered neural Japanese voice MP3s
+        const audioTracks = [];
+        const sceneDurations = [5.6, 7.8, 10.0, 8.8, 8.5, 9.2]; // Accurate baseline estimations in seconds
+        let cumulativeTimes = [0, 5.6, 13.4, 23.4, 32.2, 40.7, 49.9];
+        let totalDuration = 49.9;
+        
         let progress = 0; // Current progress in seconds
         let isPlaying = false;
         let playerInterval = null;
         let activeSceneIndex = 0;
-        let isMuted = false; // Default to unmuted so user hears sound on play
-        let speechUtterance = null;
+        let isMuted = false;
 
-        // Initialize Web Speech API voice loading
-        if (window.speechSynthesis) {
-            window.speechSynthesis.getVoices();
-            if (window.speechSynthesis.onvoiceschanged !== undefined) {
-                window.speechSynthesis.onvoiceschanged = () => {
-                    window.speechSynthesis.getVoices();
-                };
-            }
+        // Initialize Audio objects
+        for (let i = 0; i < 6; i++) {
+            const audio = new Audio(`assets/audio/scene_${i}.mp3`);
+            audio.preload = "auto";
+            audioTracks.push(audio);
+            
+            audio.addEventListener("loadedmetadata", () => {
+                sceneDurations[i] = audio.duration;
+                recalculateTimings();
+            });
         }
 
-        // Set total duration label
-        totalTimeEl.textContent = formatTime(totalDuration);
+        function recalculateTimings() {
+            let current = 0;
+            cumulativeTimes = [0];
+            for (let i = 0; i < sceneDurations.length; i++) {
+                current += sceneDurations[i];
+                cumulativeTimes.push(current);
+            }
+            totalDuration = current;
+            totalTimeEl.textContent = formatTime(totalDuration);
+        }
+
+        recalculateTimings(); // Initial run
 
         function formatTime(secs) {
             const m = Math.floor(secs / 60);
             const s = Math.floor(secs % 60);
             return `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-
-        function stopSpeech() {
-            if (window.speechSynthesis) {
-                window.speechSynthesis.cancel();
-            }
-        }
-
-        function speakScene(index) {
-            stopSpeech();
-            if (isMuted || !window.speechSynthesis) return;
-
-            const text = subtitles[index];
-            speechUtterance = new SpeechSynthesisUtterance(text);
-            speechUtterance.lang = "ja-JP";
-            speechUtterance.rate = 1.15; // Slightly speed up for a more professional tempo
-            speechUtterance.volume = 1.0;
-
-            const voices = window.speechSynthesis.getVoices();
-            const jaVoice = voices.find(v => v.lang === "ja-JP" || v.lang.startsWith("ja"));
-            if (jaVoice) {
-                speechUtterance.voice = jaVoice;
-            }
-
-            window.speechSynthesis.speak(speechUtterance);
         }
 
         function updateScene(index) {
@@ -352,10 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             subtitlesContent.textContent = subtitles[index];
-
-            if (isPlaying && !isMuted) {
-                speakScene(index);
-            }
         }
 
         function updateUI() {
@@ -366,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Update Time Display
             currentTimeEl.textContent = formatTime(progress);
 
-            // Determine active scene
+            // Determine active scene based on progress
             let currentScene = 0;
             for (let i = 0; i < cumulativeTimes.length - 1; i++) {
                 if (progress >= cumulativeTimes[i] && progress < cumulativeTimes[i + 1]) {
@@ -374,41 +359,76 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
                 }
             }
-            // Fallback for end of video
             if (progress >= totalDuration) {
                 currentScene = scenes.length - 1;
             }
 
             if (currentScene !== activeSceneIndex) {
+                // Pause former audio
+                const prevAudio = audioTracks[activeSceneIndex];
+                if (prevAudio && isPlaying) {
+                    prevAudio.pause();
+                    prevAudio.currentTime = 0;
+                }
+                
                 updateScene(currentScene);
+                
+                // Play new audio
+                const nextAudio = audioTracks[currentScene];
+                if (nextAudio && isPlaying) {
+                    nextAudio.currentTime = 0;
+                    nextAudio.volume = isMuted ? 0 : 1.0;
+                    nextAudio.play().catch(e => console.log("Audio auto-play blocked/failed:", e));
+                }
             }
         }
+
+        // Setup audio ended listener for scene transitions
+        audioTracks.forEach((audio, index) => {
+            audio.addEventListener("ended", () => {
+                if (isPlaying && activeSceneIndex === index) {
+                    if (index < 5) {
+                        const nextSceneIndex = index + 1;
+                        progress = cumulativeTimes[nextSceneIndex];
+                        updateScene(nextSceneIndex);
+                        
+                        const nextAudio = audioTracks[nextSceneIndex];
+                        if (nextAudio) {
+                            nextAudio.currentTime = 0;
+                            nextAudio.volume = isMuted ? 0 : 1.0;
+                            nextAudio.play().catch(e => console.log("Audio play failed/blocked:", e));
+                        }
+                    } else {
+                        // Complete end of video
+                        progress = totalDuration;
+                        pause();
+                        progress = 0;
+                        updateUI();
+                        // Reset all audio tracks to beginning
+                        audioTracks.forEach(a => a.currentTime = 0);
+                    }
+                }
+            });
+        });
 
         function play() {
             isPlaying = true;
             playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
             playerContainer.classList.add("playing");
 
-            if (!isMuted) {
-                if (window.speechSynthesis && window.speechSynthesis.paused) {
-                    window.speechSynthesis.resume();
-                } else {
-                    speakScene(activeSceneIndex);
-                }
+            const activeAudio = audioTracks[activeSceneIndex];
+            if (activeAudio) {
+                activeAudio.volume = isMuted ? 0 : 1.0;
+                activeAudio.play().catch(e => console.log("Audio play failed/blocked:", e));
             }
 
             playerInterval = setInterval(() => {
-                progress += 0.1;
-                if (progress >= totalDuration) {
-                    progress = totalDuration;
-                    pause();
-                    stopSpeech();
-                    progress = 0;
-                    updateUI();
-                } else {
-                    updateUI();
+                const currentAudio = audioTracks[activeSceneIndex];
+                if (currentAudio) {
+                    progress = cumulativeTimes[activeSceneIndex] + currentAudio.currentTime;
                 }
-            }, 100);
+                updateUI();
+            }, 50); // High frequency check for smooth animation syncing
         }
 
         function pause() {
@@ -417,8 +437,9 @@ document.addEventListener("DOMContentLoaded", () => {
             playerContainer.classList.remove("playing");
             clearInterval(playerInterval);
 
-            if (window.speechSynthesis && window.speechSynthesis.speaking) {
-                window.speechSynthesis.pause();
+            const activeAudio = audioTracks[activeSceneIndex];
+            if (activeAudio) {
+                activeAudio.pause();
             }
         }
 
@@ -438,17 +459,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const wasPlaying = isPlaying;
             pause();
             
-            // Jump to the start of the current scene, or the previous scene if already near start
             let targetScene = activeSceneIndex;
-            const currentSceneStartTime = cumulativeTimes[activeSceneIndex];
+            const currentAudio = audioTracks[activeSceneIndex];
+            const currentAudioTime = currentAudio ? currentAudio.currentTime : 0;
             
-            if (progress - currentSceneStartTime < 1.0 && activeSceneIndex > 0) {
+            if (currentAudioTime < 1.5 && activeSceneIndex > 0) {
                 targetScene = activeSceneIndex - 1;
             }
             
-            progress = cumulativeTimes[targetScene];
-            updateUI();
+            activeSceneIndex = targetScene;
+            progress = cumulativeTimes[activeSceneIndex];
             
+            audioTracks.forEach(a => a.currentTime = 0);
+            
+            updateUI();
             if (wasPlaying) play();
         });
 
@@ -458,7 +482,9 @@ document.addEventListener("DOMContentLoaded", () => {
             pause();
             
             if (activeSceneIndex < scenes.length - 1) {
-                progress = cumulativeTimes[activeSceneIndex + 1];
+                activeSceneIndex++;
+                progress = cumulativeTimes[activeSceneIndex];
+                audioTracks.forEach(a => a.currentTime = 0);
             } else {
                 progress = totalDuration;
             }
@@ -473,26 +499,22 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isMuted) {
                 volumeBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
                 volumeBtn.setAttribute("aria-label", "消音中（音は出ません）");
-                stopSpeech();
             } else {
                 volumeBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
                 volumeBtn.setAttribute("aria-label", "音量ミュート");
-                if (isPlaying) {
-                    if (window.speechSynthesis && window.speechSynthesis.paused) {
-                        window.speechSynthesis.resume();
-                    } else {
-                        speakScene(activeSceneIndex);
-                    }
-                }
             }
+            
+            audioTracks.forEach(audio => {
+                audio.volume = isMuted ? 0 : 1.0;
+            });
         });
 
-        // Fullscreen/Expand Event
+        // Fullscreen/Expand Toggle
         expandBtn.addEventListener("click", () => {
             const isExpanded = playerContainer.classList.toggle("expanded");
             if (isExpanded) {
                 expandBtn.innerHTML = '<i class="fa-solid fa-minimize"></i>';
-                document.body.style.overflow = "hidden"; // Disable scroll when full size
+                document.body.style.overflow = "hidden";
             } else {
                 expandBtn.innerHTML = '<i class="fa-solid fa-maximize"></i>';
                 document.body.style.overflow = "";
@@ -509,8 +531,30 @@ document.addEventListener("DOMContentLoaded", () => {
             pause();
             
             progress = ratio * totalDuration;
-            updateUI();
             
+            let targetScene = 0;
+            for (let i = 0; i < cumulativeTimes.length - 1; i++) {
+                if (progress >= cumulativeTimes[i] && progress < cumulativeTimes[i + 1]) {
+                    targetScene = i;
+                    break;
+                }
+            }
+            
+            activeSceneIndex = targetScene;
+            const offset = progress - cumulativeTimes[activeSceneIndex];
+            
+            const activeAudio = audioTracks[activeSceneIndex];
+            if (activeAudio) {
+                activeAudio.currentTime = Math.max(0, Math.min(activeAudio.duration || 0, offset));
+            }
+            
+            audioTracks.forEach((a, idx) => {
+                if (idx !== activeSceneIndex) {
+                    a.currentTime = 0;
+                }
+            });
+            
+            updateUI();
             if (wasPlaying) play();
         });
     }
