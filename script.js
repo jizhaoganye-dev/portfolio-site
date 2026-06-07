@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================================================
-    // 6. Interactive Tour Player (Aegis & Aesthetic in 60 Seconds)
+    // 6. Interactive Tour Player (Aegis & Aesthetic in 60 Seconds with TTS Audio)
     // ==========================================================================
     const playerContainer = document.querySelector(".tour-player-container");
     const playBtn = document.getElementById("playerPlayBtn");
@@ -292,7 +292,18 @@ document.addEventListener("DOMContentLoaded", () => {
         let isPlaying = false;
         let playerInterval = null;
         let activeSceneIndex = 0;
-        let isMuted = true;
+        let isMuted = false; // Default to unmuted so user hears sound on play
+        let speechUtterance = null;
+
+        // Initialize Web Speech API voice loading
+        if (window.speechSynthesis) {
+            window.speechSynthesis.getVoices();
+            if (window.speechSynthesis.onvoiceschanged !== undefined) {
+                window.speechSynthesis.onvoiceschanged = () => {
+                    window.speechSynthesis.getVoices();
+                };
+            }
+        }
 
         // Set total duration label
         totalTimeEl.textContent = formatTime(totalDuration);
@@ -301,6 +312,31 @@ document.addEventListener("DOMContentLoaded", () => {
             const m = Math.floor(secs / 60);
             const s = Math.floor(secs % 60);
             return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function stopSpeech() {
+            if (window.speechSynthesis) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function speakScene(index) {
+            stopSpeech();
+            if (isMuted || !window.speechSynthesis) return;
+
+            const text = subtitles[index];
+            speechUtterance = new SpeechSynthesisUtterance(text);
+            speechUtterance.lang = "ja-JP";
+            speechUtterance.rate = 1.15; // Slightly speed up for a more professional tempo
+            speechUtterance.volume = 1.0;
+
+            const voices = window.speechSynthesis.getVoices();
+            const jaVoice = voices.find(v => v.lang === "ja-JP" || v.lang.startsWith("ja"));
+            if (jaVoice) {
+                speechUtterance.voice = jaVoice;
+            }
+
+            window.speechSynthesis.speak(speechUtterance);
         }
 
         function updateScene(index) {
@@ -316,6 +352,10 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             subtitlesContent.textContent = subtitles[index];
+
+            if (isPlaying && !isMuted) {
+                speakScene(index);
+            }
         }
 
         function updateUI() {
@@ -349,11 +389,20 @@ document.addEventListener("DOMContentLoaded", () => {
             playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
             playerContainer.classList.add("playing");
 
+            if (!isMuted) {
+                if (window.speechSynthesis && window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                } else {
+                    speakScene(activeSceneIndex);
+                }
+            }
+
             playerInterval = setInterval(() => {
                 progress += 0.1;
                 if (progress >= totalDuration) {
                     progress = totalDuration;
                     pause();
+                    stopSpeech();
                     progress = 0;
                     updateUI();
                 } else {
@@ -367,6 +416,10 @@ document.addEventListener("DOMContentLoaded", () => {
             playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
             playerContainer.classList.remove("playing");
             clearInterval(playerInterval);
+
+            if (window.speechSynthesis && window.speechSynthesis.speaking) {
+                window.speechSynthesis.pause();
+            }
         }
 
         function togglePlay() {
@@ -414,22 +467,23 @@ document.addEventListener("DOMContentLoaded", () => {
             if (wasPlaying) play();
         });
 
-        // Volume Button (Visual Mute Toggle)
+        // Volume Button (Mute Toggle)
         volumeBtn.addEventListener("click", () => {
             isMuted = !isMuted;
             if (isMuted) {
                 volumeBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
                 volumeBtn.setAttribute("aria-label", "消音中（音は出ません）");
+                stopSpeech();
             } else {
                 volumeBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-                volumeBtn.setAttribute("aria-label", "ミュート解除中（デモモードのため音は出ません）");
-                
-                // Show floating tooltip
-                const tooltip = document.createElement("div");
-                tooltip.className = "player-tooltip";
-                tooltip.textContent = "デモモード：音声は出力されません";
-                playerContainer.appendChild(tooltip);
-                setTimeout(() => tooltip.remove(), 2500);
+                volumeBtn.setAttribute("aria-label", "音量ミュート");
+                if (isPlaying) {
+                    if (window.speechSynthesis && window.speechSynthesis.paused) {
+                        window.speechSynthesis.resume();
+                    } else {
+                        speakScene(activeSceneIndex);
+                    }
+                }
             }
         });
 
