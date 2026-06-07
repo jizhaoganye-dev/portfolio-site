@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css?v=2.0.0">
+    <link rel="stylesheet" href="styles.css">
     
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -126,162 +126,6 @@
                     </span>
                     <span class="arrow"></span>
                 </a>
-            </div>
-        </section>
-
-        <!-- Section 1.5: Interactive Tour Player (Aegis & Aesthetic in 60 Seconds) -->
-        <section class="tour-section section-padding-top" id="tour">
-            <div class="container">
-                <div class="section-header text-center">
-                    <span class="section-tag" lang="en">Concept Video Tour</span>
-                    <h2 class="section-title">60秒でわかる Aegis & Aesthetic</h2>
-                    <p class="section-desc">AI駆動開発と自動防御システム（DevSecOps）がもたらす価値を、アニメーション動画風スライドでご紹介します。</p>
-                </div>
-                
-                <div class="tour-player-container card">
-                    <div class="tour-player-screen">
-                        <!-- Scene 1: Opening -->
-                        <div class="tour-scene active" id="scene-1">
-                            <div class="scene-bg-glow blue-glow"></div>
-                            <div class="scene-body flex-center">
-                                <div class="scene-shield-wrapper">
-                                    <i class="fa-solid fa-shield-halved scene-shield-icon"></i>
-                                </div>
-                                <h3 class="scene-title-text text-gradient">Aegis & Aesthetic</h3>
-                                <p class="scene-subtitle-text">AI-Driven x DevSecOps Standard</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Scene 2: Pain Points -->
-                        <div class="tour-scene" id="scene-2">
-                            <div class="scene-bg-glow red-glow"></div>
-                            <div class="scene-body">
-                                <div class="scene-split-grid">
-                                    <div class="scene-grid-left">
-                                        <i class="fa-solid fa-calendar-xmark scene-error-icon"></i>
-                                        <p class="scene-detail-label">従来の開発期間：数ヶ月</p>
-                                    </div>
-                                    <div class="scene-grid-right">
-                                        <i class="fa-solid fa-triangle-exclamation scene-error-icon"></i>
-                                        <p class="scene-detail-label">高額なセキュリティ費用</p>
-                                    </div>
-                                </div>
-                                <h3 class="scene-header-text">納期とセキュリティのジレンマ</h3>
-                                <p class="scene-desc-text">一般的な開発では、安全性を高めるために時間とコストが膨大にかかります。</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Scene 3: Solution (AI Agent) -->
-                        <div class="tour-scene" id="scene-3">
-                            <div class="scene-bg-glow purple-glow"></div>
-                            <div class="scene-body">
-                                <div class="scene-code-wrapper">
-                                    <div class="scene-code-header">
-                                        <span>Antigravity 2.0 Agent</span>
-                                    </div>
-                                    <pre class="scene-code-content"><code><span class="c-blue">const</span> app = <span class="c-purple">new</span> AntigravityAgent();
-app.setSpecs(userRequirements);
-<span class="c-green">// Autonomously generating clean code...</span>
-app.writeCode(<span class="c-yellow">"10x_speed_pixels_perfect"</span>);
-app.runSecurityAudit();</code></pre>
-                                </div>
-                                <h3 class="scene-header-text">AIエージェントによる超高速実装</h3>
-                                <p class="scene-desc-text">「Antigravity 2.0」が仕様書からコードを自律生成・編集。従来の10倍の速度でコーディングします。</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Scene 4: DevSecOps -->
-                        <div class="tour-scene" id="scene-4">
-                            <div class="scene-bg-glow green-glow"></div>
-                            <div class="scene-body">
-                                <div class="scene-badge-grid">
-                                    <div class="scene-badge-card active">
-                                        <i class="fa-solid fa-code"></i>
-                                        <span>CodeQL</span>
-                                    </div>
-                                    <div class="scene-badge-card active">
-                                        <i class="fa-solid fa-magnifying-glass-shield"></i>
-                                        <span>Trivy</span>
-                                    </div>
-                                    <div class="scene-badge-card active">
-                                        <i class="fa-solid fa-user-secret"></i>
-                                        <span>OWASP ZAP</span>
-                                    </div>
-                                    <div class="scene-badge-card active">
-                                        <i class="fa-solid fa-robot"></i>
-                                        <span>Dependabot</span>
-                                    </div>
-                                </div>
-                                <h3 class="scene-header-text">4層の自動防御網（追加費用0円）</h3>
-                                <p class="scene-desc-text">GitHub無償枠を賢く活用。Pushするたびにコードと設定の脆弱性を自動監査します。</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Scene 5: Evidence -->
-                        <div class="tour-scene" id="scene-5">
-                            <div class="scene-bg-glow amber-glow"></div>
-                            <div class="scene-body">
-                                <div class="scene-stats-grid">
-                                    <div class="scene-stat-circle">
-                                        <span class="stat-circle-num text-green">98</span>
-                                        <span class="stat-circle-label">Lighthouse</span>
-                                    </div>
-                                    <div class="scene-stat-card">
-                                        <i class="fa-solid fa-circle-check text-green"></i>
-                                        <span class="stat-card-text">自動脆弱性診断 合格</span>
-                                    </div>
-                                </div>
-                                <h3 class="scene-header-text">嘘偽りのない実測データ</h3>
-                                <p class="scene-desc-text">最高クラスの表示パフォーマンスとセキュリティ実証スコアを標準で提供します。</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Scene 6: Monitor CTA -->
-                        <div class="tour-scene" id="scene-6">
-                            <div class="scene-bg-glow gold-glow"></div>
-                            <div class="scene-body flex-center">
-                                <div class="scene-offer-card">
-                                    <span class="scene-offer-badge">30% OFF MONITOR</span>
-                                    <h4 class="scene-offer-title">特別実績公開モニター様 募集中</h4>
-                                    <p class="scene-offer-desc">先着2社様限定で、通常と同じ高品質な開発を特別価格にてご提供いたします。</p>
-                                    <a href="#contact" class="btn btn-primary btn-sm">今すぐ無料相談する</a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Subtitles / Narrator -->
-                        <div class="tour-player-subtitles">
-                            <div class="subtitles-wave">
-                                <span></span><span></span><span></span><span></span><span></span>
-                            </div>
-                            <p class="subtitles-text" id="subtitles-content">デザインの美しさと、強固な安全性を両立する。次世代Web制作イージス・アンド・エステティック。</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Player Controls -->
-                    <div class="tour-player-controls">
-                        <!-- Progress Bar -->
-                        <div class="player-progress-container" id="playerProgressContainer">
-                            <div class="player-progress-bar" id="playerProgressBar"></div>
-                            <div class="player-progress-handle"></div>
-                        </div>
-                        
-                        <div class="player-controls-row">
-                            <div class="controls-left">
-                                <button class="player-btn" id="playerPrevBtn" aria-label="前のスライド"><i class="fa-solid fa-backward-step"></i></button>
-                                <button class="player-btn btn-play-toggle" id="playerPlayBtn" aria-label="再生"><i class="fa-solid fa-play"></i></button>
-                                <button class="player-btn" id="playerNextBtn" aria-label="次のスライド"><i class="fa-solid fa-forward-step"></i></button>
-                                <div class="player-time-display">
-                                    <span id="playerCurrentTime">0:00</span> / <span id="playerTotalTime">0:42</span>
-                                </div>
-                            </div>
-                            <div class="controls-right">
-                                <button class="player-btn" id="playerVolumeBtn" aria-label="音量をミュート"><i class="fa-solid fa-volume-high"></i></button>
-                                <button class="player-btn" id="playerExpandBtn" aria-label="全画面表示（拡大）"><i class="fa-solid fa-maximize"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -1225,6 +1069,6 @@ app.runSecurityAudit();</code></pre>
     </footer>
 
     <!-- Custom JS -->
-    <script src="script.js?v=2.0.0"></script>
+    <script src="script.js"></script>
 </body>
 </html>
