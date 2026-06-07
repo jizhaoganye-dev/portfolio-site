@@ -258,4 +258,207 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 1200);
         });
     }
+
+    // ==========================================================================
+    // 6. Interactive Tour Player (Aegis & Aesthetic in 60 Seconds)
+    // ==========================================================================
+    const playerContainer = document.querySelector(".tour-player-container");
+    const playBtn = document.getElementById("playerPlayBtn");
+    const prevBtn = document.getElementById("playerPrevBtn");
+    const nextBtn = document.getElementById("playerNextBtn");
+    const volumeBtn = document.getElementById("playerVolumeBtn");
+    const expandBtn = document.getElementById("playerExpandBtn");
+    const progressBar = document.getElementById("playerProgressBar");
+    const progressContainer = document.getElementById("playerProgressContainer");
+    const currentTimeEl = document.getElementById("playerCurrentTime");
+    const totalTimeEl = document.getElementById("playerTotalTime");
+    const subtitlesContent = document.getElementById("subtitles-content");
+    const scenes = document.querySelectorAll(".tour-scene");
+
+    if (playerContainer && playBtn) {
+        const sceneDurations = [5, 7, 8, 8, 8, 6]; // Durations in seconds
+        const totalDuration = sceneDurations.reduce((a, b) => a + b, 0); // 42 seconds
+        const cumulativeTimes = [0, 5, 12, 20, 28, 36, 42];
+        const subtitles = [
+            "デザインの美しさと、強固な安全性を両立する。次世代Web制作イージス・アンド・エステティック。",
+            "多くのWeb制作で放置されがちな脆弱性リスク。しかし、従来の検査手法では莫大なコストと時間がかかります。",
+            "この課題を解決するのが、AIエージェント「Antigravity 2.0」による超高速実装。仕様書からコードを自律生成し、開発期間を大幅に短縮します。",
+            "さらに、GitHub無償枠をフル活用した4層の自動防御網を装備。追加費用ゼロで恒常的な脆弱性診断を実現します。",
+            "確かな性能は、実測データが証明します。Lighthouse最高クラスの表示速度と、すべてのセキュリティ自動診断の合格を実証済み。",
+            "現在、実績公開にご協力いただける先着2社様限定の特別モニター枠を募集中です。安全で高速なWebサイトを、特別価格で構築しましょう。"
+        ];
+
+        let progress = 0; // Current progress in seconds
+        let isPlaying = false;
+        let playerInterval = null;
+        let activeSceneIndex = 0;
+        let isMuted = true;
+
+        // Set total duration label
+        totalTimeEl.textContent = formatTime(totalDuration);
+
+        function formatTime(secs) {
+            const m = Math.floor(secs / 60);
+            const s = Math.floor(secs % 60);
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function updateScene(index) {
+            if (index < 0 || index >= scenes.length) return;
+            activeSceneIndex = index;
+
+            scenes.forEach((scene, idx) => {
+                if (idx === index) {
+                    scene.classList.add("active");
+                } else {
+                    scene.classList.remove("active");
+                }
+            });
+
+            subtitlesContent.textContent = subtitles[index];
+        }
+
+        function updateUI() {
+            // Update Progress Bar
+            const ratio = progress / totalDuration;
+            progressBar.style.width = `${ratio * 100}%`;
+
+            // Update Time Display
+            currentTimeEl.textContent = formatTime(progress);
+
+            // Determine active scene
+            let currentScene = 0;
+            for (let i = 0; i < cumulativeTimes.length - 1; i++) {
+                if (progress >= cumulativeTimes[i] && progress < cumulativeTimes[i + 1]) {
+                    currentScene = i;
+                    break;
+                }
+            }
+            // Fallback for end of video
+            if (progress >= totalDuration) {
+                currentScene = scenes.length - 1;
+            }
+
+            if (currentScene !== activeSceneIndex) {
+                updateScene(currentScene);
+            }
+        }
+
+        function play() {
+            isPlaying = true;
+            playBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            playerContainer.classList.add("playing");
+
+            playerInterval = setInterval(() => {
+                progress += 0.1;
+                if (progress >= totalDuration) {
+                    progress = totalDuration;
+                    pause();
+                    progress = 0;
+                    updateUI();
+                } else {
+                    updateUI();
+                }
+            }, 100);
+        }
+
+        function pause() {
+            isPlaying = false;
+            playBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+            playerContainer.classList.remove("playing");
+            clearInterval(playerInterval);
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                pause();
+            } else {
+                play();
+            }
+        }
+
+        // Play/Pause Event
+        playBtn.addEventListener("click", togglePlay);
+
+        // Previous Scene Event
+        prevBtn.addEventListener("click", () => {
+            const wasPlaying = isPlaying;
+            pause();
+            
+            // Jump to the start of the current scene, or the previous scene if already near start
+            let targetScene = activeSceneIndex;
+            const currentSceneStartTime = cumulativeTimes[activeSceneIndex];
+            
+            if (progress - currentSceneStartTime < 1.0 && activeSceneIndex > 0) {
+                targetScene = activeSceneIndex - 1;
+            }
+            
+            progress = cumulativeTimes[targetScene];
+            updateUI();
+            
+            if (wasPlaying) play();
+        });
+
+        // Next Scene Event
+        nextBtn.addEventListener("click", () => {
+            const wasPlaying = isPlaying;
+            pause();
+            
+            if (activeSceneIndex < scenes.length - 1) {
+                progress = cumulativeTimes[activeSceneIndex + 1];
+            } else {
+                progress = totalDuration;
+            }
+            
+            updateUI();
+            if (wasPlaying) play();
+        });
+
+        // Volume Button (Visual Mute Toggle)
+        volumeBtn.addEventListener("click", () => {
+            isMuted = !isMuted;
+            if (isMuted) {
+                volumeBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+                volumeBtn.setAttribute("aria-label", "消音中（音は出ません）");
+            } else {
+                volumeBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+                volumeBtn.setAttribute("aria-label", "ミュート解除中（デモモードのため音は出ません）");
+                
+                // Show floating tooltip
+                const tooltip = document.createElement("div");
+                tooltip.className = "player-tooltip";
+                tooltip.textContent = "デモモード：音声は出力されません";
+                playerContainer.appendChild(tooltip);
+                setTimeout(() => tooltip.remove(), 2500);
+            }
+        });
+
+        // Fullscreen/Expand Event
+        expandBtn.addEventListener("click", () => {
+            const isExpanded = playerContainer.classList.toggle("expanded");
+            if (isExpanded) {
+                expandBtn.innerHTML = '<i class="fa-solid fa-minimize"></i>';
+                document.body.style.overflow = "hidden"; // Disable scroll when full size
+            } else {
+                expandBtn.innerHTML = '<i class="fa-solid fa-maximize"></i>';
+                document.body.style.overflow = "";
+            }
+        });
+
+        // Timeline Scrubbing Event
+        progressContainer.addEventListener("click", (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+            
+            const wasPlaying = isPlaying;
+            pause();
+            
+            progress = ratio * totalDuration;
+            updateUI();
+            
+            if (wasPlaying) play();
+        });
+    }
 });
+
