@@ -69,7 +69,7 @@ async function main() {
   r++;
 
   // 作成日
-  setRow(ws1, r, ['作成日', '2026年6月7日'], { height: 22, font: fontSmall, alignment: { ...alignWrap, horizontal: 'right' } });
+  setRow(ws1, r, ['作成日', '2026年6月8日'], { height: 22, font: fontSmall, alignment: { ...alignWrap, horizontal: 'right' } });
   r++;
   r++; // 空行
 
