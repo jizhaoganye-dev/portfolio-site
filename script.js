@@ -73,8 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Toggle mobile menu
     if (navToggle) {
         navToggle.addEventListener("click", () => {
-            navToggle.classList.toggle("open");
+            const isOpen = navToggle.classList.toggle("open");
             navMenu.classList.toggle("open");
+            navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
         });
     }
     
@@ -83,11 +84,12 @@ document.addEventListener("DOMContentLoaded", () => {
         link.addEventListener("click", () => {
             navToggle.classList.remove("open");
             navMenu.classList.remove("open");
+            navToggle.setAttribute("aria-expanded", "false");
         });
     });
 
     // ==========================================================================
-    // 3. FAQ Accordion (Smooth Height Calculation Transition)
+    // 3. FAQ Accordion (Smooth Height Calculation Transition & ARIA Toggles)
     // ==========================================================================
     const faqQuestions = document.querySelectorAll(".faq-question");
     
@@ -101,12 +103,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (item !== faqItem && item.classList.contains("faq-open")) {
                     item.classList.remove("faq-open");
                     item.querySelector(".faq-answer").style.maxHeight = "0px";
+                    item.querySelector(".faq-question").setAttribute("aria-expanded", "false");
                 }
             });
             
-            faqItem.classList.toggle("faq-open");
+            const isNowOpen = faqItem.classList.toggle("faq-open");
+            question.setAttribute("aria-expanded", isNowOpen ? "true" : "false");
             
-            if (faqItem.classList.contains("faq-open")) {
+            if (isNowOpen) {
                 // Calculate content height and apply to max-height for smooth transition
                 faqAnswer.style.maxHeight = `${faqAnswer.scrollHeight}px`;
             } else {
